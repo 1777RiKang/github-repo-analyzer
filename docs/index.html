@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Repo Analyzer</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","PingFang SC","Helvetica Neue",sans-serif; background:#f5f7fa; color:#333; }
+.header { background:linear-gradient(135deg,#24292e,#444d56); color:white; padding:30px 20px; text-align:center; }
+.header h1 { font-size:28px; margin-bottom:8px; }
+.header p { font-size:14px; opacity:0.85; }
+.container { max-width:1000px; margin:30px auto; padding:20px; }
+.card { background:white; border-radius:12px; padding:30px; box-shadow:0 1px 4px rgba(0,0,0,0.08); margin-bottom:20px; }
+.card h2 { font-size:20px; margin-bottom:15px; color:#24292e; }
+.card p { line-height:1.7; color:#555; margin-bottom:10px; }
+.card code { background:#f0f0f0; padding:2px 6px; border-radius:4px; font-size:13px; }
+.btn { display:inline-block; padding:12px 24px; background:#0366d6; color:white; border-radius:8px; text-decoration:none; font-size:15px; margin:5px; }
+.btn:hover { background:#0256b6; }
+.features { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin:20px 0; }
+.feat { background:white; border-radius:10px; padding:20px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+.feat .icon { font-size:32px; margin-bottom:10px; }
+.feat h3 { font-size:15px; color:#24292e; margin-bottom:5px; }
+.feat p { font-size:13px; color:#888; }
+.footer { text-align:center; padding:30px; color:#999; font-size:12px; }
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>GitHub Repo Analyzer</h1>
+    <p>10 维度数据分析 · 10 张可视化图表 · 交互式 Web · PDF 报告导出</p>
+</div>
+<div class="container">
+    <div class="card">
+        <h2>关于本项目</h2>
+        <p>输入任意 GitHub 用户名（如 <code>torvalds</code>、<code>microsoft</code>），一键采集所有公开仓库数据，进行 10 维度深度分析，生成交互式图表和 PDF 报告。</p>
+        <p><strong>Tech Stack:</strong> Python · Streamlit · pandas · matplotlib · wordcloud</p>
+        <p style="margin-top:15px;">
+            <a class="btn" href="https://github.com/1777RiKang/github-repo-analyzer">View on GitHub</a>
+        </p>
+    </div>
+    <div class="card">
+        <h2>功能特性</h2>
+        <div class="features">
+            <div class="feat"><div class="icon">&#x1F4CA;</div><h3>10 维度分析</h3><p>从基础统计到活跃度评分</p></div>
+            <div class="feat"><div class="icon">&#x1F4C8;</div><h3>10 张图表</h3><p>饼图、雷达图、词云等</p></div>
+            <div class="feat"><div class="icon">&#x1F525;</div><h3>热门项目</h3><p>实时抓取 GitHub Trending</p></div>
+            <div class="feat"><div class="icon">&#x2694;&#xFE0F;</div><h3>对比分析</h3><p>两用户并排对比</p></div>
+            <div class="feat"><div class="icon">&#x1F4C4;</div><h3>PDF 导出</h3><p>一键生成分析报告</p></div>
+            <div class="feat"><div class="icon">&#x1F7E2;</div><h3>活跃度评分</h3><p>0-100 分仓库健康评估</p></div>
+        </div>
+    </div>
+    <div class="card">
+        <h2>快速开始</h2>
+        <p><code>git clone https://github.com/1777RiKang/github-repo-analyzer.git</code></p>
+        <p><code>pip install -r requirements.txt</code></p>
+        <p><code>python run_web.py</code></p>
+        <p style="margin-top:10px;color:#888;">浏览器自动打开 http://localhost:8501</p>
+    </div>
+    <div class="card">
+        <h2>分析维度</h2>
+        <p>1. 基础统计 &middot; 2. Stars TOP5 &middot; 3. 语言分布 &middot; 4. 语言均星排行 &middot; 5. 创建时间趋势</p>
+        <p>6. 热门 Topics &middot; 7. 许可证分布 &middot; 8. 仓库活跃度评分 &middot; 9. 语言趋势分析 &middot; 10. 项目健康度</p>
+    </div>
+</div>
+<div class="footer">
+    <p>GitHub Repo Analyzer &copy; 2026 · 22 单元测试 · MIT License</p>
+</div>
+</body>
+</html>
