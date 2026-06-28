@@ -21,6 +21,9 @@ import requests
 import ssl
 import warnings
 
+# Monkey-patch: disable SSL verification globally for corporate proxy environments
+ssl._create_default_https_context = ssl._create_unverified_context
+
 API_BASE = "https://api.github.com"
 HEADERS = {
     "User-Agent": "github-repo-analyzer/1.0",
