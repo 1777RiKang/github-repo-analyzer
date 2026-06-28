@@ -18,6 +18,8 @@ import time
 from typing import Any, Dict, List, Optional
 
 import requests
+import ssl
+import warnings
 
 API_BASE = "https://api.github.com"
 HEADERS = {
@@ -51,10 +53,11 @@ class BaseGitHubSession:
         """GET 请求，带重试和限流处理。"""
         last_error: Optional[Exception] = None
 
+        verify_ssl = True
         for attempt in range(1, MAX_RETRIES + 1):
             try:
                 time.sleep(REQUEST_DELAY)
-                resp = self.session.get(url, params=params, timeout=20)
+                resp = self.session.get(url, params=params, timeout=20, verify=verify_ssl)
 
                 if resp.status_code == 403 and "rate limit" in resp.text.lower():
                     remaining = resp.headers.get("X-RateLimit-Remaining", "0")
@@ -73,6 +76,11 @@ class BaseGitHubSession:
 
             except requests.RequestException as e:
                 last_error = e
+                # SSL error fallback: retry without certificate verification
+                if isinstance(e, requests.exceptions.SSLError) and verify_ssl:
+                    warnings.warn("SSL verification failed; retrying without verification (corporate proxy detected)")
+                    verify_ssl = False
+                    continue
                 if attempt < MAX_RETRIES:
                     time.sleep(2 ** attempt)
 
