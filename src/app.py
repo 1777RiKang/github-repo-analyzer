@@ -540,7 +540,7 @@ elif page == "⚔️ 对比分析":
                 st.markdown(f"### 📊 {user_a}")
                 with st.spinner(f"正在分析 {user_a}..."):
                     try:
-                        df_a, stats_a, report_a, charts_a, _ = run_single_analysis(
+                        df_a, stats_a, report_a, charts_a, _, _ = run_single_analysis(
                             user_a, resolve_token(token), max_repos,
                         )
                         st.session_state["cmp_df_a"] = df_a
@@ -554,7 +554,7 @@ elif page == "⚔️ 对比分析":
                 st.markdown(f"### 📊 {user_b}")
                 with st.spinner(f"正在分析 {user_b}..."):
                     try:
-                        df_b, stats_b, report_b, charts_b, _ = run_single_analysis(
+                        df_b, stats_b, report_b, charts_b, _, _ = run_single_analysis(
                             user_b, resolve_token(token), max_repos,
                         )
                         st.session_state["cmp_df_b"] = df_b
