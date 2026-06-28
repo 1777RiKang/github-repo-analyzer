@@ -45,6 +45,9 @@ class BaseGitHubSession:
     def __init__(self, token: str = "") -> None:
         self.session = requests.Session()
         self.session.headers.update(HEADERS)
+        if os.environ.get("GITHUB_INSECURE", "").strip() in ("1", "true", "yes"):
+            self.session.verify = False
+            warnings.filterwarnings("ignore", message="Unverified HTTPS request")
         resolved = resolve_token(token)
         if resolved:
             self.session.headers["Authorization"] = f"token {resolved}"
