@@ -430,7 +430,7 @@ elif page == "🔍 用户仓库分析":
             tabs = st.tabs(display_labels)
             for t, key in zip(tabs, chart_keys):
                 with t:
-                    st.image(charts[key], use_column_width=True)
+                    st.image(charts[key], width="stretch")
 
         # 活跃度明细表
         st.markdown("---")
@@ -622,14 +622,14 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_a.items():
                     if "language pie" in key.lower() or "language stars" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
         with cr:
             st.caption(user_b)
             if charts_b:
                 for key, buf in charts_b.items():
                     if "language pie" in key.lower() or "language stars" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
 
         # Side-by-side charts: stars histogram
         st.markdown("### 📊 Stars 分布对比")
@@ -640,7 +640,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_a.items():
                     if "stars histogram" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
         with cr2:
             st.caption(user_b)
@@ -648,7 +648,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_b.items():
                     if "stars histogram" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
 
         # Wordclouds
@@ -660,7 +660,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_a.items():
                     if "wordcloud" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
         with cr3:
             st.caption(user_b)
@@ -668,7 +668,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_b.items():
                     if "wordcloud" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
 
         # Activity scores comparison
@@ -680,7 +680,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_a.items():
                     if "activity" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
         with cr4:
             st.caption(user_b)
@@ -688,7 +688,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_b.items():
                     if "activity" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
 
         # Language radar comparison
@@ -700,7 +700,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_a.items():
                     if "radar" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
         with cr5:
             st.caption(user_b)
@@ -708,7 +708,7 @@ elif page == "⚔️ 对比分析":
                 for key, buf in charts_b.items():
                     if "radar" in key.lower():
                         buf.seek(0)
-                        st.image(buf, use_column_width=True)
+                        st.image(buf, width="stretch")
                         break
 
 # ── Footer ───────────────────────────────────────────────────
