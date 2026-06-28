@@ -160,12 +160,12 @@ def _build_charts(df: pd.DataFrame, user_label: str) -> dict[str, BytesIO]:
 
 
 def run_single_analysis(user: str, token: str, max_repos: int):
-    """Full pipeline for one user (with caching). Returns (df, stats, report, charts, chart_paths)."""
+    """Full pipeline for one user (with caching). Returns (df, stats, report, charts, chart_paths, project_health)."""
     with st.status(f"正在连接 GitHub API 获取 **{user}** 的仓库数据...", expanded=True) as status:
         df = _fetch_repos(user, token, max_repos)
         if df.empty:
             status.update(label="未获取到数据", state="error")
-            return None, {}, "", {}, []
+            return None, {}, "", {}, [], {}
         status.update(label=f"数据采集完成 — {len(df)} 个仓库", state="complete")
 
     analyzer = GitHubAnalyzer(df)
@@ -173,6 +173,7 @@ def run_single_analysis(user: str, token: str, max_repos: int):
     act_summary = analyzer.activity_summary()
     stats.update(act_summary)
     report = analyzer.summary_report()
+    project_health = analyzer.project_health()
     charts = _build_charts(df, user)
     # Collect chart file paths for PDF export (only this analysis's charts)
     chart_names = [
@@ -183,7 +184,7 @@ def run_single_analysis(user: str, token: str, max_repos: int):
     ]
     chart_paths = [os.path.join(OUTPUT_DIR, n) for n in chart_names
                    if os.path.exists(os.path.join(OUTPUT_DIR, n))]
-    return df, stats, report, charts, chart_paths
+    return df, stats, report, charts, chart_paths, project_health
 
 
 # ── Sidebar ──────────────────────────────────────────────────
