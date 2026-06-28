@@ -338,8 +338,11 @@ elif page == "🔍 用户仓库分析":
         unsafe_allow_html=True,
     )
 
-    # 快捷选择: 点击按钮后写入 session_state["_search_user"] 并 rerun
-    # text_input 有 key 时会从 session_state 恢复值，所以下次 rerun 就能显示
+    # 快捷选择: 通过 _pending_quick_user 中转，避免直接修改已创建的 widget
+    if "_pending_quick_user" in st.session_state:
+        pending = st.session_state.pop("_pending_quick_user")
+        st.session_state["_search_user"] = pending
+
     user = st.text_input(
         "GitHub 用户名或组织名",
         placeholder="例如: torvalds, microsoft, google, TheAlgorithms",
@@ -357,7 +360,7 @@ elif page == "🔍 用户仓库分析":
     for j, (quser, qlabel) in enumerate(QUICK_USERS.items()):
         with quick_cols[j]:
             if st.button(qlabel, key=f"q_{quser}", use_container_width=True):
-                st.session_state["_search_user"] = quser
+                st.session_state["_pending_quick_user"] = quser
                 st.rerun()
 
     if analyze_btn and user.strip():
