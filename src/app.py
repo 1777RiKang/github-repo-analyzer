@@ -497,6 +497,12 @@ elif page == "⚔️ 对比分析":
         unsafe_allow_html=True,
     )
 
+    # 快捷选择中转: 必须在 text_input 之前处理
+    if "_pcmp_a" in st.session_state:
+        st.session_state["cmp_a"] = st.session_state.pop("_pcmp_a")
+    if "_pcmp_b" in st.session_state:
+        st.session_state["cmp_b"] = st.session_state.pop("_pcmp_b")
+
     col1, col2 = st.columns(2)
     with col1:
         user_a = st.text_input(
@@ -508,12 +514,6 @@ elif page == "⚔️ 对比分析":
             "用户 B", placeholder="例如: microsoft", key="cmp_b",
             label_visibility="collapsed",
         )
-
-    # 快捷选择中转: 必须在 text_input 之前处理
-    if "_pcmp_a" in st.session_state:
-        st.session_state["cmp_a"] = st.session_state.pop("_pcmp_a")
-    if "_pcmp_b" in st.session_state:
-        st.session_state["cmp_b"] = st.session_state.pop("_pcmp_b")
 
     st.caption("快捷选择: 第一次点击填入 A，第二次填入 B")
     qc = st.columns(len(QUICK_USERS))
