@@ -509,21 +509,22 @@ elif page == "⚔️ 对比分析":
             label_visibility="collapsed",
         )
 
-    st.caption("快捷选择:")
+    # 快捷选择中转: 必须在 text_input 之前处理
+    if "_pcmp_a" in st.session_state:
+        st.session_state["cmp_a"] = st.session_state.pop("_pcmp_a")
+    if "_pcmp_b" in st.session_state:
+        st.session_state["cmp_b"] = st.session_state.pop("_pcmp_b")
+
+    st.caption("快捷选择: 第一次点击填入 A，第二次填入 B")
     qc = st.columns(len(QUICK_USERS))
     for j, (quser, qlabel) in enumerate(QUICK_USERS.items()):
         with qc[j]:
             if st.button(qlabel, key=f"cmp_q_{quser}", use_container_width=True):
-                if not st.session_state.get("cmp_a_input"):
-                    st.session_state["cmp_a_input"] = quser
-                elif not st.session_state.get("cmp_b_input"):
-                    st.session_state["cmp_b_input"] = quser
+                if not st.session_state.get("cmp_a") and not st.session_state.get("cmp_b"):
+                    st.session_state["_pcmp_a"] = quser
+                elif not st.session_state.get("cmp_b"):
+                    st.session_state["_pcmp_b"] = quser
                 st.rerun()
-
-    if st.session_state.get("cmp_a_input"):
-        st.session_state["cmp_a"] = st.session_state.pop("cmp_a_input")
-    if st.session_state.get("cmp_b_input"):
-        st.session_state["cmp_b"] = st.session_state.pop("cmp_b_input")
 
     compare_btn = st.button("⚔️ 开始对比", use_container_width=True, type="primary")
 
