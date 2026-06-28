@@ -393,10 +393,20 @@ class GitHubVisualizer:
         labels = ["Issues 开启", "Wiki 开启", "Pages 开启", "Discussions 开启", "有主页仓库"]
         total = health["总仓库数"]
         values = []
+        valid_labels = []
         for k in labels:
-            val_str = health[k]
-            pct = float(val_str.split("(")[-1].rstrip("%)")) / 100
+            val_str = health.get(k, "N/A")
+            if "N/A" in val_str or val_str == "N/A":
+                continue
+            try:
+                pct = float(val_str.split("(")[-1].rstrip("%)")) / 100
+            except (ValueError, IndexError):
+                continue
             values.append(pct * total)
+            valid_labels.append(k)
+        if not valid_labels:
+            return None
+        labels = valid_labels
         disabled = [total - v for v in values]
 
         fig, ax = self._create_fig("项目健康度 · 功能开启率", "功能", "仓库数")
