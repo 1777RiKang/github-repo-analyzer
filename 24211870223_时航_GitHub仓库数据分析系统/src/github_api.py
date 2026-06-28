@@ -89,8 +89,6 @@ class BaseGitHubSession:
             p["per_page"] = min(100, max_items - len(all_items))
             p["page"] = page
             page_items = self._get(url, params=p)
-            if isinstance(page_items, dict):
-                page_items = page_items.get("items", [])
             if not isinstance(page_items, list) or not page_items:
                 break
             all_items.extend(page_items)
@@ -170,12 +168,6 @@ class GitHubAPI(BaseGitHubSession):
                 "pushed_at": repo.get("pushed_at", ""),
                 "is_fork": repo.get("fork", False),
                 "archived": repo.get("archived", False),
-                "has_issues": repo.get("has_issues", True),
-                "has_wiki": repo.get("has_wiki", True),
-                "has_pages": repo.get("has_pages", False),
-                "has_discussions": repo.get("has_discussions", False),
-                "homepage": (repo.get("homepage") or ""),
-                "default_branch": repo.get("default_branch", "main"),
             })
 
         return formatted

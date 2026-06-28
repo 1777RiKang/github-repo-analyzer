@@ -10,7 +10,7 @@ GitHub Trending 热门项目采集模块
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List
 
-from github_api import BaseGitHubSession, resolve_token, REQUEST_DELAY
+from github_api import BaseGitHubSession, resolve_token
 
 
 class TrendingScraper(BaseGitHubSession):
@@ -22,7 +22,7 @@ class TrendingScraper(BaseGitHubSession):
     def _search(self, query: str, max_items: int = 30) -> List[Dict[str, Any]]:
         """搜索仓库，返回结构化数据。"""
         import time
-        time.sleep(REQUEST_DELAY * 1.5)  # Search API 需要更长间隔
+        time.sleep(0.7)  # Search API 需要更长间隔
 
         params = {
             "q": query,

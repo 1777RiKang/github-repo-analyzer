@@ -6,7 +6,7 @@ GitHub 仓库数据分析系统
 功能:
   1. 通过 GitHub REST API 采集用户/组织的全部公开仓库数据
   2. 使用 Pandas 进行多维度数据分析
-  3. 使用 Matplotlib 生成 10 张专业分析图表
+  3. 使用 Matplotlib 生成 6 张专业分析图表
   4. 输出完整的文字分析报告
 
 使用方式:
@@ -29,12 +29,7 @@ GitHub 仓库数据分析系统
   - output/04_creation_timeline.png  : 仓库创建趋势图
   - output/05_stars_histogram.png    : Stars 分布直方图
   - output/06_language_stars.png     : 语言平均星数排行
-  - output/07_topics_wordcloud.png   : Topics 词云
-  - output/08_activity_scores.png    : 活跃度评分
-  - output/09_language_radar.png     : 语言趋势雷达图
-  - output/10_project_health.png     : 项目健康度
   - output/analysis_report.txt       : 文字分析报告
-  - output/report_{user}.pdf         : PDF 分析报告
 """
 
 import argparse
@@ -49,8 +44,6 @@ if sys.platform == "win32":
         pass
 
 import pandas as pd
-
-import re
 
 from github_api import GitHubAPI, resolve_token
 from analyze import GitHubAnalyzer
@@ -69,13 +62,6 @@ KNOWN_USERS = {
     "5": {"user": "TheAlgorithms", "name": "The Algorithms (算法集合)"},
 }
 
-
-
-def _validate_username(user: str) -> bool:
-    """验证 GitHub 用户名格式。"""
-    if not user or len(user) > 39:
-        return False
-    return bool(re.match(r'^[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?$', user))
 
 def collect_data(user: str, token: str, max_repos: int = 200) -> pd.DataFrame:
     """采集 GitHub 仓库数据并保存为 CSV。"""
@@ -188,9 +174,9 @@ def main() -> None:
                 return
             elif choice == "0":
                 user = input("  请输入 GitHub 用户名: ").strip()
-                if user and _validate_username(user):
+                if user:
                     break
-                print("  [FAIL] 请输入有效的用户名（字母/数字/连字符，最长39位）")
+                print("  [FAIL] 请输入有效的用户名")
             elif choice in KNOWN_USERS:
                 user = KNOWN_USERS[choice]["user"]
                 break
@@ -222,7 +208,7 @@ def main() -> None:
     # 生成 PDF 报告
     analyzer = GitHubAnalyzer(df)
     stats = analyzer.basic_stats()
-    pdf_path = export_pdf(user, stats, report, paths, None, OUTPUT_DIR)
+    pdf_path = export_pdf(user, stats, report, paths, OUTPUT_DIR)
     print(f"\n  PDF 报告已生成: {pdf_path}")
 
     print(f"\n{'='*50}")
